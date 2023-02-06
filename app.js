@@ -1,13 +1,20 @@
 const express = require("express");
 const cors = require("cors");
+const expressSession = require('express-session');
+
 const contactsRouter = require("./app/routes/contact.route");
+const usersRouter = require("./app/routes/user.route");
 const ApiError = require("./app/api-error");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(expressSession({
+    secret: 'keyboard cat'
+}));
 app.use("/api/contacts", contactsRouter);
+app.use("/api", usersRouter);
 
 // handle 404 response
 app.use((req, res, next) => {
